@@ -1,5 +1,6 @@
 import React from "react";
 import * as PANOLENS from "../../node_modules/panolens/build/panolens";
+import * as THREE from "three";
 
 const PanoCreator = ({
   viewer,
