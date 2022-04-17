@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 import InfospotListItem from "./InfospotListItem";
+import axios from "axios";
 
 const InfospotList = ({
   infospots,
@@ -8,15 +9,18 @@ const InfospotList = ({
   setCurrentInfospotIndex,
 }) => {
   useEffect(() => {
-    console.log(infospots);
-  }, [infospots]);
+    const getData = async () => {
+      const data = await axios.get("http://localhost:4000/infospots");
+    };
+
+    getData();
+  }, [infospots, currentPanoIndex]);
   if (Array.isArray(infospots) && infospots.length === 0) {
     return <div></div>;
   } else {
     return (
       <div style={{ border: "1px solid black" }}>
         {infospots[currentPanoIndex].map((element, index) => {
-          console.log("infospots", infospots[currentPanoIndex][index]);
           return (
             <InfospotListItem
               key={index}

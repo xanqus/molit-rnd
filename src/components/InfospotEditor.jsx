@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as PANOLENS from "../../node_modules/panolens/build/panolens";
 import * as THREE from "three";
+import axios from "axios";
 
 const InfospotEditor = ({
   viewer,
@@ -8,6 +9,7 @@ const InfospotEditor = ({
   infospots,
   setInfospots,
   currentPanoIndex,
+  setCurrentPanoIndex,
   arrivePanoIndex,
   setArrivePanoIndex,
   currentInfospotIndex,
@@ -19,6 +21,19 @@ const InfospotEditor = ({
   infospotVideoSrc,
   setInfospotVideoSrc,
 }) => {
+  useEffect(() => {
+    try {
+      const defaultInfospots = [];
+      for (let i = 0; i < panoramas.length; i++) {
+        defaultInfospots.push([]);
+      }
+      setInfospots(defaultInfospots);
+
+      console.log("panoramas-infospot", panoramas);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [panoramas, setInfospots]);
   const addTag = (text, imageSrc, videoSrc) => {
     const coordinate = viewer.outputPosition();
     console.log(coordinate);
@@ -32,6 +47,15 @@ const InfospotEditor = ({
 
     if (text !== "" && imageSrc === "" && videoSrc === "") {
       infospot.addHoverText(text);
+      axios.post("http://localhost:4000/infospots", {
+        panoramaId: panoramas[currentPanoIndex].id,
+        coordinateX: coordinate[0],
+        coordinateY: coordinate[1],
+        coordinateZ: coordinate[2],
+        type: "textSpot",
+        infospotText: text,
+      });
+      console.log(panoramas[currentPanoIndex].id);
     } else if (text !== "" && imageSrc !== "" && videoSrc === "") {
       //여기부터 수정
       const textDiv = document.createElement("div");
@@ -40,7 +64,7 @@ const InfospotEditor = ({
       newDiv.style.cssText = "width:200px;height:300px;";
       const newImg = document.createElement("img");
       newImg.style.cssText = "width:100%;height:100%;";
-      newImg.src = "/assets/1.JPG";
+      newImg.src = imageSrc;
       newDiv.appendChild(textDiv);
       newDiv.appendChild(newImg);
       infospot.addHoverElement(newDiv, 200);
@@ -66,7 +90,7 @@ const InfospotEditor = ({
     //   return k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
     // });
 
-    panoramas[currentPanoIndex].add(infospot);
+    panoramas[currentPanoIndex].panorama.add(infospot);
     // console.log(currentPanoIndex);
     setInfospots(
       infospots.map((ele, index) =>
@@ -87,6 +111,9 @@ const InfospotEditor = ({
       text,
       300
     );
+    linkSpot.addEventListener("click", () => {
+      setCurrentPanoIndex(arrivePanoIndex);
+    });
 
     setInfospots(
       infospots.map((ele, index) =>
@@ -95,7 +122,6 @@ const InfospotEditor = ({
     );
 
     setArrivePanoIndex(-1);
-
     console.log(text);
   };
   return (
@@ -149,7 +175,7 @@ const InfospotEditor = ({
             //   return;
             // }
 
-            panoramas[currentPanoIndex].addEventListener(
+            panoramas[currentPanoIndex].panorama.addEventListener(
               "click",
               function handler() {
                 addTag(infospotText, infospotImageSrc, infospotVideoSrc);

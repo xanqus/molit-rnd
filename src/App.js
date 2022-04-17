@@ -4,7 +4,6 @@ import PanoList from "./components/PanoList";
 import PanoCreator from "./components/PanoCreator";
 import InfospotList from "./components/InfospotList";
 import InfospotEditor from "./components/InfospotEditor";
-import * as THREE from "three";
 
 function App() {
   const [viewer, setViewer] = useState();
@@ -29,6 +28,7 @@ function App() {
     >
       <Viewer setViewer={setViewer} />
       <PanoCreator
+        setViewer={setViewer}
         viewer={viewer}
         panoramas={panoramas}
         setPanoramas={setPanoramas}
@@ -51,6 +51,7 @@ function App() {
         infospots={infospots}
         setInfospots={setInfospots}
         currentPanoIndex={currentPanoIndex}
+        setCurrentPanoIndex={setCurrentPanoIndex}
         arrivePanoIndex={arrivePanoIndex}
         setArrivePanoIndex={setArrivePanoIndex}
         currentInfospotIndex={currentInfospotIndex}
@@ -62,6 +63,14 @@ function App() {
         infospotVideoSrc={infospotVideoSrc}
         setInfospotVideoSrc={setInfospotVideoSrc}
       />
+      <button
+        onClick={() => {
+          console.log("infospots", infospots);
+          console.log("currentPanoId", panoramas[currentPanoIndex].id);
+        }}
+      >
+        infospots
+      </button>
     </div>
   );
 }

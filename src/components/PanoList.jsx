@@ -1,6 +1,4 @@
 import React from "react";
-import * as PANOLENS from "../../node_modules/panolens/build/panolens";
-import * as THREE from "three";
 import PanoListItem from "./PanoListItem";
 
 const PanoList = ({ viewer, panoramas, setCurrentPanoIndex }) => {
@@ -9,7 +7,7 @@ const PanoList = ({ viewer, panoramas, setCurrentPanoIndex }) => {
       {panoramas.map((ele, index) => (
         <PanoListItem
           viewer={viewer}
-          panorama={panoramas[index]}
+          panorama={panoramas[index].panorama}
           index={index}
           key={index}
           setCurrentPanoIndex={setCurrentPanoIndex}
