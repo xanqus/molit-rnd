@@ -21,33 +21,19 @@ const InfospotEditor = ({
   infospotVideoSrc,
   setInfospotVideoSrc,
 }) => {
-  useEffect(() => {
-    try {
-      const defaultInfospots = [];
-      for (let i = 0; i < panoramas.length; i++) {
-        defaultInfospots.push([]);
-      }
-      setInfospots(defaultInfospots);
-
-      console.log("panoramas-infospot", panoramas);
-    } catch (e) {
-      console.log(e);
-    }
-  }, [panoramas, setInfospots]);
-  const addTag = (text, imageSrc, videoSrc) => {
+  const addTag = async (text, imageSrc, videoSrc) => {
     const coordinate = viewer.outputPosition();
-    console.log(coordinate);
+
     const infospot = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
     infospot.position.set(
       parseInt(coordinate[0]),
       parseInt(coordinate[1]),
       parseInt(coordinate[2])
     );
-    infospot.toPanorama = panoramas[0];
 
     if (text !== "" && imageSrc === "" && videoSrc === "") {
       infospot.addHoverText(text);
-      axios.post("http://localhost:4000/infospots", {
+      await axios.post("http://localhost:4000/infospots", {
         panoramaId: panoramas[currentPanoIndex].id,
         coordinateX: coordinate[0],
         coordinateY: coordinate[1],
@@ -55,7 +41,8 @@ const InfospotEditor = ({
         type: "textSpot",
         infospotText: text,
       });
-      console.log(panoramas[currentPanoIndex].id);
+
+      setInfospots(infospots.concat(infospot));
     } else if (text !== "" && imageSrc !== "" && videoSrc === "") {
       //여기부터 수정
       const textDiv = document.createElement("div");
@@ -68,6 +55,16 @@ const InfospotEditor = ({
       newDiv.appendChild(textDiv);
       newDiv.appendChild(newImg);
       infospot.addHoverElement(newDiv, 200);
+      await axios.post("http://localhost:4000/infospots", {
+        panoramaId: panoramas[currentPanoIndex].id,
+        coordinateX: coordinate[0],
+        coordinateY: coordinate[1],
+        coordinateZ: coordinate[2],
+        type: "imageSpot",
+        infospotText: text,
+        imageLink: imageSrc,
+      });
+
       // infospot.element.innerText = text;
 
       setInfospotImageSrc("");
@@ -82,6 +79,15 @@ const InfospotEditor = ({
       newDiv.appendChild(newVideo);
       infospot.addHoverElement(newDiv, 200);
       setInfospotVideoSrc("");
+      await axios.post("http://localhost:4000/infospots", {
+        panoramaId: panoramas[currentPanoIndex].id,
+        coordinateX: coordinate[0],
+        coordinateY: coordinate[1],
+        coordinateZ: coordinate[2],
+        type: "videoSpot",
+        infospotText: text,
+        videoLink: videoSrc,
+      });
     }
 
     // infospot.addHoverElement(testDiv, 200);
@@ -92,16 +98,11 @@ const InfospotEditor = ({
 
     panoramas[currentPanoIndex].panorama.add(infospot);
     // console.log(currentPanoIndex);
-    setInfospots(
-      infospots.map((ele, index) =>
-        index === currentPanoIndex ? [...ele, infospot] : [...ele]
-      )
-    );
   };
-  const addLink = (text) => {
+  const addLink = async (text) => {
     const coordinate = viewer.outputPosition();
     console.log(coordinate);
-    const linkSpot = panoramas[currentPanoIndex].link(
+    const linkSpot = panoramas[currentPanoIndex].panorama.link(
       panoramas[arrivePanoIndex],
       new THREE.Vector3(
         parseInt(coordinate[0]),
@@ -114,12 +115,18 @@ const InfospotEditor = ({
     linkSpot.addEventListener("click", () => {
       setCurrentPanoIndex(arrivePanoIndex);
     });
+    linkSpot.toPanorama = panoramas[2].panorama;
 
-    setInfospots(
-      infospots.map((ele, index) =>
-        index === currentPanoIndex ? [...ele, linkSpot] : [...ele]
-      )
-    );
+    await axios.post("http://localhost:4000/infospots", {
+      panoramaId: panoramas[currentPanoIndex].id,
+      coordinateX: coordinate[0],
+      coordinateY: coordinate[1],
+      coordinateZ: coordinate[2],
+      type: "linkSpot",
+      infospotText: text,
+      startPanoIndex: currentPanoIndex,
+      arrivePanoIndex: arrivePanoIndex,
+    });
 
     setArrivePanoIndex(-1);
     console.log(text);
@@ -225,7 +232,7 @@ const InfospotEditor = ({
       </div>
       <button
         onClick={(e) => {
-          panoramas[currentPanoIndex].addEventListener(
+          panoramas[currentPanoIndex].panorama.addEventListener(
             "click",
             function handler() {
               addLink(infospotText);

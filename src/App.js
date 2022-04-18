@@ -41,8 +41,11 @@ function App() {
         setCurrentPanoIndex={setCurrentPanoIndex}
       />
       <InfospotList
+        panoramas={panoramas}
         infospots={infospots}
+        setInfospots={setInfospots}
         currentPanoIndex={currentPanoIndex}
+        setCurrentPanoIndex={setCurrentPanoIndex}
         setCurrentInfospotIndex={setCurrentInfospotIndex}
       />
       <InfospotEditor
@@ -63,14 +66,6 @@ function App() {
         infospotVideoSrc={infospotVideoSrc}
         setInfospotVideoSrc={setInfospotVideoSrc}
       />
-      <button
-        onClick={() => {
-          console.log("infospots", infospots);
-          console.log("currentPanoId", panoramas[currentPanoIndex].id);
-        }}
-      >
-        infospots
-      </button>
     </div>
   );
 }
