@@ -65,7 +65,7 @@ const PanoCreator = ({
                 panorama: newPanorama,
               })
             );
-            setInfospots(infospots.push([]));
+            setInfospots(infospots.concat([]));
             console.log("panoramas", panoramas);
           });
       },
