@@ -15,7 +15,7 @@ const PanoCreator = ({
     try {
       const getData = async () => {
         const panoramaList = [];
-        const data = await axios.get("http://localhost:4000/panoramas");
+        const data = await axios.get("/panoramas");
 
         for (let i = 0; i < data.data.length; i++) {
           const panorama = new PANOLENS.ImagePanorama(data.data[i].photoURL);
@@ -45,13 +45,13 @@ const PanoCreator = ({
         console.log("reader.result", reader.result);
 
         await axios
-          .post("http://localhost:4000/panoramas", imageFile, {
+          .post("/panoramas", imageFile, {
             headers: {
               "Content-Type": `multipart/form-data; `,
             },
           })
           .then(async () => {
-            const data = await axios.get("http://localhost:4000/panoramas");
+            const data = await axios.get("/panoramas");
             console.log("length", data.data.length);
             console.log("lastPanorama", data.data[data.data.length - 1]);
             const newPanorama = new PANOLENS.ImagePanorama(

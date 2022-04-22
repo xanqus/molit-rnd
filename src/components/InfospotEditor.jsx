@@ -33,7 +33,7 @@ const InfospotEditor = ({
 
     if (text !== "" && imageSrc === "" && videoSrc === "") {
       infospot.addHoverText(text);
-      await axios.post("http://localhost:4000/infospots", {
+      await axios.post("/infospots", {
         panoramaId: panoramas[currentPanoIndex].id,
         coordinateX: coordinate[0],
         coordinateY: coordinate[1],
@@ -55,7 +55,7 @@ const InfospotEditor = ({
       newDiv.appendChild(textDiv);
       newDiv.appendChild(newImg);
       infospot.addHoverElement(newDiv, 200);
-      await axios.post("http://localhost:4000/infospots", {
+      await axios.post("/infospots", {
         panoramaId: panoramas[currentPanoIndex].id,
         coordinateX: coordinate[0],
         coordinateY: coordinate[1],
@@ -79,7 +79,7 @@ const InfospotEditor = ({
       newDiv.appendChild(newVideo);
       infospot.addHoverElement(newDiv, 200);
       setInfospotVideoSrc("");
-      await axios.post("http://localhost:4000/infospots", {
+      await axios.post("/infospots", {
         panoramaId: panoramas[currentPanoIndex].id,
         coordinateX: coordinate[0],
         coordinateY: coordinate[1],
@@ -117,7 +117,7 @@ const InfospotEditor = ({
     });
     linkSpot.toPanorama = panoramas[2].panorama;
 
-    await axios.post("http://localhost:4000/infospots", {
+    await axios.post("/infospots", {
       panoramaId: panoramas[currentPanoIndex].id,
       coordinateX: coordinate[0],
       coordinateY: coordinate[1],

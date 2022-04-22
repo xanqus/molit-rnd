@@ -4,6 +4,7 @@ import PanoList from "./components/PanoList";
 import PanoCreator from "./components/PanoCreator";
 import InfospotList from "./components/InfospotList";
 import InfospotEditor from "./components/InfospotEditor";
+import axios from "axios";
 
 function App() {
   const [viewer, setViewer] = useState();
@@ -66,6 +67,14 @@ function App() {
         infospotVideoSrc={infospotVideoSrc}
         setInfospotVideoSrc={setInfospotVideoSrc}
       />
+      <button
+        onClick={async () => {
+          const data = await axios.get("/panoramas");
+          console.log(data);
+        }}
+      >
+        test
+      </button>
     </div>
   );
 }

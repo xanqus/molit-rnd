@@ -18,9 +18,7 @@ const InfospotList = ({
       const getData = async () => {
         if (Array.isArray(panoramas) && panoramas.length !== 0) {
           await axios
-            .get(
-              `http://localhost:4000/infospots/${panoramas[currentPanoIndex].id}`
-            )
+            .get(`/infospots/${panoramas[currentPanoIndex].id}`)
             .then(async (data) => {
               for (let i = 0; i < data.data.length; i++) {
                 const infospot = await new PANOLENS.Infospot(
