@@ -39,6 +39,7 @@ function App() {
       <PanoList
         viewer={viewer}
         panoramas={panoramas}
+        setPanoramas={setPanoramas}
         setCurrentPanoIndex={setCurrentPanoIndex}
       />
       <InfospotList

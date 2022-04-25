@@ -11,28 +11,6 @@ const PanoCreator = ({
   setInfospots,
   location,
 }) => {
-  useEffect(() => {
-    try {
-      const getData = async () => {
-        const panoramaList = [];
-        const data = await axios.get("/panoramas");
-
-        for (let i = 0; i < data.data.length; i++) {
-          const panorama = new PANOLENS.ImagePanorama(data.data[i].photoURL);
-          if (viewer !== undefined) {
-            viewer.add(panorama);
-          }
-          panoramaList.push({ panorama: panorama, id: data.data[i]._id });
-        }
-        setPanoramas(panoramaList);
-      };
-
-      getData();
-    } catch (e) {
-      console.log(e);
-    }
-  }, [viewer, setPanoramas]);
-
   const onChange = (e) => {
     var reader = new FileReader();
     const img = e.target.files[0];
@@ -45,13 +23,15 @@ const PanoCreator = ({
         console.log("reader.result", reader.result);
 
         await axios
-          .post("/panoramas", imageFile, {
+          .post(process.env.REACT_APP_API_HOST + "/panoramas", imageFile, {
             headers: {
               "Content-Type": `multipart/form-data; `,
             },
           })
           .then(async () => {
-            const data = await axios.get("/panoramas");
+            const data = await axios.get(
+              process.env.REACT_APP_API_HOST + "/panoramas"
+            );
             console.log("length", data.data.length);
             console.log("lastPanorama", data.data[data.data.length - 1]);
             const newPanorama = new PANOLENS.ImagePanorama(

@@ -18,7 +18,10 @@ const InfospotList = ({
       const getData = async () => {
         if (Array.isArray(panoramas) && panoramas.length !== 0) {
           await axios
-            .get(`/infospots/${panoramas[currentPanoIndex].id}`)
+            .get(
+              process.env.REACT_APP_API_HOST +
+                `/infospots/${panoramas[currentPanoIndex].id}`
+            )
             .then(async (data) => {
               for (let i = 0; i < data.data.length; i++) {
                 const infospot = await new PANOLENS.Infospot(
