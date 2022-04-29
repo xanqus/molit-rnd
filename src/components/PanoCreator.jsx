@@ -57,7 +57,7 @@ const PanoCreator = ({
     }
   };
   return (
-    <div style={{ border: "1px solid black" }}>
+    <div>
       <input type="file" name="panorama_img" onChange={onChange} />
     </div>
   );

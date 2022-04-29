@@ -209,7 +209,7 @@ const InfospotEditor = ({
         </button>
       </div>
 
-      <button
+      {/* <button
         onClick={() => {
           if (currentInfospotIndex === -1) {
             alert("수정할 태그를 선택해주세요");
@@ -227,12 +227,15 @@ const InfospotEditor = ({
         }}
       >
         tag 메시지 수정
-      </button>
+      </button> */}
       <div>도착 파노라마 목록</div>
       <div>
         {panoramas.map((ele, index) => {
           return (
             <div
+              style={
+                index === arrivePanoIndex ? { border: "1px solid red" } : {}
+              }
               onClick={() => {
                 setArrivePanoIndex(index);
               }}

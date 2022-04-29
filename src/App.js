@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Viewer from "./components/Viewer";
 import PanoList from "./components/PanoList";
 import PanoCreator from "./components/PanoCreator";
@@ -16,6 +16,17 @@ function App() {
   const [infospotText, setInfospotText] = useState("");
   const [infospotImageSrc, setInfospotImageSrc] = useState("");
   const [infospotVideoSrc, setInfospotVideoSrc] = useState("");
+  const [dropDownMenuItems, setDownDropMenuItems] = useState([]);
+  const [infospotListForDropdown, setInfospotListForDropdown] = useState([]);
+  useEffect(() => {
+    const getInfospots = async () => {
+      const data = await axios.get(
+        process.env.REACT_APP_API_HOST + "/infospots"
+      );
+      setInfospots(data.data);
+    };
+    getInfospots();
+  }, []);
 
   return (
     <div
@@ -28,29 +39,36 @@ function App() {
       }}
     >
       <Viewer setViewer={setViewer} />
-      <PanoCreator
-        setViewer={setViewer}
-        viewer={viewer}
-        panoramas={panoramas}
-        setPanoramas={setPanoramas}
-        infospots={infospots}
-        setInfospots={setInfospots}
-      />
-      <PanoList
-        viewer={viewer}
-        panoramas={panoramas}
-        setPanoramas={setPanoramas}
-        currentPanoIndex={currentPanoIndex}
-        setCurrentPanoIndex={setCurrentPanoIndex}
-      />
-      <InfospotList
+      <div>
+        <PanoCreator
+          setViewer={setViewer}
+          viewer={viewer}
+          panoramas={panoramas}
+          setPanoramas={setPanoramas}
+          infospots={infospots}
+          setInfospots={setInfospots}
+        />
+        <PanoList
+          viewer={viewer}
+          panoramas={panoramas}
+          setPanoramas={setPanoramas}
+          infospots={infospots}
+          currentPanoIndex={currentPanoIndex}
+          setCurrentPanoIndex={setCurrentPanoIndex}
+          dropDownMenuItems={dropDownMenuItems}
+          setDropDownMenuItems={setDownDropMenuItems}
+          infospotListForDropdown={infospotListForDropdown}
+          setInfospotListForDropdown={setInfospotListForDropdown}
+        />
+      </div>
+      {/* <InfospotList
         panoramas={panoramas}
         infospots={infospots}
         setInfospots={setInfospots}
         currentPanoIndex={currentPanoIndex}
         setCurrentPanoIndex={setCurrentPanoIndex}
         setCurrentInfospotIndex={setCurrentInfospotIndex}
-      />
+      /> */}
       <InfospotEditor
         viewer={viewer}
         panoramas={panoramas}

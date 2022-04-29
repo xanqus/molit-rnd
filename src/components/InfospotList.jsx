@@ -82,10 +82,11 @@ const InfospotList = ({
                   linkSpot.addEventListener("click", () => {
                     setCurrentPanoIndex(data.data[i].arrivePanoIndex);
                   });
-                  linkSpot.toPanorama = panoramas[2].panorama;
+
                   infospotListFromDb.push(linkSpot);
                 }
               }
+              console.log("infospotListFromDb", infospotListFromDb);
 
               setInfospots(infospotListFromDb);
             });
