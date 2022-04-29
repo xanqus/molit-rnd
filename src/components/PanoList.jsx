@@ -3,7 +3,13 @@ import * as PANOLENS from "../../node_modules/panolens/build/panolens";
 import PanoListItem from "./PanoListItem";
 import axios from "axios";
 
-const PanoList = ({ viewer, panoramas, setPanoramas, setCurrentPanoIndex }) => {
+const PanoList = ({
+  viewer,
+  panoramas,
+  setPanoramas,
+  currentPanoIndex,
+  setCurrentPanoIndex,
+}) => {
   useEffect(() => {
     try {
       const getData = async () => {

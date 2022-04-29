@@ -23,6 +23,7 @@ const InfospotList = ({
                 `/infospots/${panoramas[currentPanoIndex].id}`
             )
             .then(async (data) => {
+              let duplicateCheck = [];
               for (let i = 0; i < data.data.length; i++) {
                 const infospot = await new PANOLENS.Infospot(
                   300,
@@ -33,6 +34,7 @@ const InfospotList = ({
                   parseInt(data.data[i].coordinateY),
                   parseInt(data.data[i].coordinateZ)
                 );
+
                 if (data.data[i].type !== "linkSpot") {
                   if (data.data[i].type === "textSpot") {
                     infospot.addHoverText(data.data[i].infospotText);
@@ -60,7 +62,9 @@ const InfospotList = ({
                     newDiv.appendChild(newVideo);
                     infospot.addHoverElement(newDiv, 200);
                   }
+
                   panoramas[currentPanoIndex].panorama.add(infospot);
+
                   infospotListFromDb.push(infospot);
                 } else {
                   const linkSpot = panoramas[
@@ -82,6 +86,7 @@ const InfospotList = ({
                   infospotListFromDb.push(linkSpot);
                 }
               }
+
               setInfospots(infospotListFromDb);
             });
         }
@@ -90,7 +95,7 @@ const InfospotList = ({
     } catch (e) {
       console.log(e);
     }
-  }, [panoramas, currentPanoIndex, setInfospots]);
+  }, [panoramas, setInfospots, currentPanoIndex, setCurrentPanoIndex]);
   if (Array.isArray(infospots) && infospots.length === 0) {
     return <div></div>;
   } else {

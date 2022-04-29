@@ -21,6 +21,18 @@ const InfospotEditor = ({
   infospotVideoSrc,
   setInfospotVideoSrc,
 }) => {
+  useEffect(() => {
+    if (panoramas[currentPanoIndex]) {
+      panoramas[currentPanoIndex].panorama.addEventListener(
+        "contextmenu",
+        (e) => {
+          console.log(e);
+          alert("hi");
+          e.preventDefault();
+        }
+      );
+    }
+  }, [panoramas, currentPanoIndex]);
   const addTag = async (text, imageSrc, videoSrc) => {
     const coordinate = viewer.outputPosition();
 
@@ -131,6 +143,7 @@ const InfospotEditor = ({
     setArrivePanoIndex(-1);
     console.log(text);
   };
+
   return (
     <div id="test" style={{ border: "1px solid black" }}>
       <div>

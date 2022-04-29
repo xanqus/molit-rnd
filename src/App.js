@@ -40,6 +40,7 @@ function App() {
         viewer={viewer}
         panoramas={panoramas}
         setPanoramas={setPanoramas}
+        currentPanoIndex={currentPanoIndex}
         setCurrentPanoIndex={setCurrentPanoIndex}
       />
       <InfospotList
@@ -68,14 +69,14 @@ function App() {
         infospotVideoSrc={infospotVideoSrc}
         setInfospotVideoSrc={setInfospotVideoSrc}
       />
-      <button
+      {/* <button
         onClick={async () => {
           const data = await axios.get("/panoramas");
           console.log(data);
         }}
       >
         test
-      </button>
+      </button> */}
     </div>
   );
 }
