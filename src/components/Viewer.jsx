@@ -22,8 +22,8 @@ const Viewer = ({ setViewer }) => {
       <div
         id="coucou"
         style={{
-          width: "1500px",
-          height: "800px",
+          width: "100%",
+          height: "100%",
         }}
       ></div>
     </>

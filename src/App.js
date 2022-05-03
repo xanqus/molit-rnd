@@ -35,11 +35,22 @@ function App() {
         height: "auto",
         display: "flex",
         flexDirection: "row",
-        border: "1px solid black",
       }}
     >
-      <Viewer setViewer={setViewer} />
-      <div>
+      <div
+        style={{
+          width: "80vw",
+          height: "90vh",
+        }}
+      >
+        <Viewer setViewer={setViewer} />
+      </div>
+      <div
+        style={{
+          width: "10vw",
+          height: "90vh",
+        }}
+      >
         <PanoCreator
           setViewer={setViewer}
           viewer={viewer}
@@ -69,25 +80,33 @@ function App() {
         setCurrentPanoIndex={setCurrentPanoIndex}
         setCurrentInfospotIndex={setCurrentInfospotIndex}
       /> */}
-      <InfospotEditor
-        viewer={viewer}
-        panoramas={panoramas}
-        infospots={infospots}
-        setInfospots={setInfospots}
-        currentPanoIndex={currentPanoIndex}
-        setCurrentPanoIndex={setCurrentPanoIndex}
-        arrivePanoIndex={arrivePanoIndex}
-        setArrivePanoIndex={setArrivePanoIndex}
-        currentInfospotIndex={currentInfospotIndex}
-        setCurrentInfospotIndex={setCurrentInfospotIndex}
-        infospotText={infospotText}
-        setInfospotText={setInfospotText}
-        infospotImageSrc={infospotImageSrc}
-        setInfospotImageSrc={setInfospotImageSrc}
-        infospotVideoSrc={infospotVideoSrc}
-        setInfospotVideoSrc={setInfospotVideoSrc}
-      />
-      {/* <button
+      <div
+        style={{
+          width: "10vw",
+          height: "90vh",
+
+          color: "#000000",
+        }}
+      >
+        <InfospotEditor
+          viewer={viewer}
+          panoramas={panoramas}
+          infospots={infospots}
+          setInfospots={setInfospots}
+          currentPanoIndex={currentPanoIndex}
+          setCurrentPanoIndex={setCurrentPanoIndex}
+          arrivePanoIndex={arrivePanoIndex}
+          setArrivePanoIndex={setArrivePanoIndex}
+          currentInfospotIndex={currentInfospotIndex}
+          setCurrentInfospotIndex={setCurrentInfospotIndex}
+          infospotText={infospotText}
+          setInfospotText={setInfospotText}
+          infospotImageSrc={infospotImageSrc}
+          setInfospotImageSrc={setInfospotImageSrc}
+          infospotVideoSrc={infospotVideoSrc}
+          setInfospotVideoSrc={setInfospotVideoSrc}
+        />
+        {/* <button
         onClick={async () => {
           const data = await axios.get("/panoramas");
           console.log(data);
@@ -95,6 +114,7 @@ function App() {
       >
         test
       </button> */}
+      </div>
     </div>
   );
 }

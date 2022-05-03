@@ -145,8 +145,8 @@ const InfospotEditor = ({
   };
 
   return (
-    <div id="test" style={{ border: "1px solid black" }}>
-      <div>
+    <div id="test">
+      <div style={{ color: "#000000" }}>
         <div>tag 생성</div>
         <div>
           <div>tag 내용</div>
@@ -234,7 +234,7 @@ const InfospotEditor = ({
           return (
             <div
               style={
-                index === arrivePanoIndex ? { border: "1px solid red" } : {}
+                index === arrivePanoIndex ? { backgroundColor: "#00d8d6" } : {}
               }
               onClick={() => {
                 setArrivePanoIndex(index);

@@ -57,8 +57,27 @@ const PanoCreator = ({
     }
   };
   return (
-    <div>
-      <input type="file" name="panorama_img" onChange={onChange} />
+    <div style={{ width: "100%", height: "50px" }}>
+      <label
+        for="panorama_img"
+        style={{
+          display: "flex",
+          width: "100%",
+          height: "100%",
+          backgroundColor: "#ffdd59",
+          justifyContent: "center",
+          alignItems: "center",
+          color: "#4f4f4f",
+        }}
+      >
+        파노라마 추가
+      </label>
+      <input
+        type="file"
+        id="panorama_img"
+        onChange={onChange}
+        style={{ display: "none" }}
+      />
     </div>
   );
 };
