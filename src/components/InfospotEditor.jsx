@@ -194,6 +194,10 @@ const InfospotEditor = ({
             //   alert("텍스트를 입력해주세요.");
             //   return;
             // }
+            if (infospotText === "") {
+              alert("텍스트를 입력해주세요.");
+              return;
+            }
 
             panoramas[currentPanoIndex].panorama.addEventListener(
               "click",
@@ -248,11 +252,16 @@ const InfospotEditor = ({
       </div>
       <button
         onClick={(e) => {
+          if (infospotText === "") {
+            alert("텍스트를 입력해주세요.");
+            return;
+          }
           panoramas[currentPanoIndex].panorama.addEventListener(
             "click",
             function handler() {
               addLink(infospotText);
               this.removeEventListener("click", handler);
+              setInfospotText("");
             }
           );
         }}
