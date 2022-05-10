@@ -1,0 +1,20 @@
+#researchButton {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  box-sizing: border-box;
+  background: #0066d9;
+  color: #ffffff;
+  cursor: pointer;
+  width: 10%;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+}
+
+#researchButton:hover,
+#researchButton:active {
+  background-color: #0358b8;
+}
