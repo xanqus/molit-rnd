@@ -24,8 +24,29 @@ const Viewer = ({ setViewer }) => {
         style={{
           width: "100%",
           height: "100%",
+          position: "relative",
         }}
-      ></div>
+      >
+        <div
+          onClick={() => {
+            window.location.href = "http://caitory.com/cs/survey/";
+          }}
+          style={{
+            display: "flex",
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            width: "10%",
+            height: "50px",
+            backgroundColor: "#efefef",
+            borderRadius: "10px",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          만족도 조사로 이동
+        </div>
+      </div>
     </>
   );
 };

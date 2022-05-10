@@ -127,7 +127,7 @@ const InfospotEditor = ({
     linkSpot.addEventListener("click", () => {
       setCurrentPanoIndex(arrivePanoIndex);
     });
-    linkSpot.toPanorama = panoramas[2].panorama;
+    linkSpot.toPanorama = panoramas[arrivePanoIndex].panorama;
 
     await axios.post(process.env.REACT_APP_API_HOST + "/infospots", {
       panoramaId: panoramas[currentPanoIndex].id,
@@ -139,6 +139,19 @@ const InfospotEditor = ({
       startPanoIndex: currentPanoIndex,
       arrivePanoIndex: arrivePanoIndex,
     });
+
+    console.log("panoramaData: ", {
+      panoramaId: panoramas[currentPanoIndex].id,
+      coordinateX: coordinate[0],
+      coordinateY: coordinate[1],
+      coordinateZ: coordinate[2],
+      type: "linkSpot",
+      infospotText: text,
+      startPanoIndex: currentPanoIndex,
+      arrivePanoIndex: arrivePanoIndex,
+    });
+
+    console.log("linkSpot: ", linkSpot);
 
     setArrivePanoIndex(-1);
     console.log(text);
