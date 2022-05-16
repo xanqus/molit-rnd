@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as PANOLENS from "../../node_modules/panolens/build/panolens";
 import * as THREE from "three";
 import axios from "axios";
@@ -21,6 +21,7 @@ const InfospotEditor = ({
   infospotVideoSrc,
   setInfospotVideoSrc,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     if (panoramas[currentPanoIndex]) {
       panoramas[currentPanoIndex].panorama.addEventListener(
@@ -43,6 +44,7 @@ const InfospotEditor = ({
       parseInt(coordinate[2])
     );
 
+    setIsLoading(true);
     if (text !== "" && imageSrc === "" && videoSrc === "") {
       infospot.addHoverText(text);
       await axios.post(process.env.REACT_APP_API_HOST + "/infospots", {
@@ -109,6 +111,7 @@ const InfospotEditor = ({
     // });
 
     panoramas[currentPanoIndex].panorama.add(infospot);
+    setIsLoading(false);
     // console.log(currentPanoIndex);
   };
   const addLink = async (text) => {
@@ -128,6 +131,7 @@ const InfospotEditor = ({
       setCurrentPanoIndex(arrivePanoIndex);
     });
     linkSpot.toPanorama = panoramas[arrivePanoIndex].panorama;
+    setIsLoading(true);
 
     await axios.post(process.env.REACT_APP_API_HOST + "/infospots", {
       panoramaId: panoramas[currentPanoIndex].id,
@@ -154,8 +158,30 @@ const InfospotEditor = ({
     console.log("linkSpot: ", linkSpot);
 
     setArrivePanoIndex(-1);
+    setIsLoading(false);
     console.log(text);
   };
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          position: "absolute",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100%",
+          backgroundColor: "black",
+          opacity: "0.5",
+          color: "white",
+        }}
+      >
+        태그 생성중..
+      </div>
+    );
+  }
 
   return (
     <div id="test">

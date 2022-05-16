@@ -18,12 +18,15 @@ function App() {
   const [infospotVideoSrc, setInfospotVideoSrc] = useState("");
   const [dropDownMenuItems, setDownDropMenuItems] = useState([]);
   const [infospotListForDropdown, setInfospotListForDropdown] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const getInfospots = async () => {
+      setIsLoading(true);
       const data = await axios.get(
         process.env.REACT_APP_API_HOST + "/infospots"
       );
       setInfospots(data.data);
+      setIsLoading(false);
     };
     getInfospots();
   }, []);
@@ -37,6 +40,27 @@ function App() {
         flexDirection: "row",
       }}
     >
+      <div
+        style={
+          isLoading === true
+            ? {
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "absolute",
+                top: "0",
+                left: "0",
+                width: "100%",
+                height: "100%",
+                backgroundColor: "black",
+                opacity: "0.5",
+                color: "white",
+              }
+            : { display: "none" }
+        }
+      >
+        데이터 로딩중..
+      </div>
       <div
         style={{
           width: "80vw",
@@ -59,6 +83,7 @@ function App() {
           infospots={infospots}
           setInfospots={setInfospots}
         />
+
         <PanoList
           viewer={viewer}
           panoramas={panoramas}

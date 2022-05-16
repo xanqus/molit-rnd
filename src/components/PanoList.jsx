@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as PANOLENS from "../../node_modules/panolens/build/panolens";
 import PanoListItem from "./PanoListItem";
 import axios from "axios";
@@ -18,6 +18,7 @@ const PanoList = ({
 }) => {
   const dropDownInfospotItems = [];
   const infospotListArray = [];
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     for (let i = 0; i < panoramas.length; i++) {
@@ -100,6 +101,7 @@ const PanoList = ({
     try {
       const getData = async () => {
         const panoramaList = [];
+        setIsLoading(true);
         const data = await axios.get(
           process.env.REACT_APP_API_HOST + "/panoramas"
         );
@@ -113,6 +115,7 @@ const PanoList = ({
         }
 
         setPanoramas(panoramaList);
+        setIsLoading(false);
       };
 
       getData();
@@ -122,6 +125,27 @@ const PanoList = ({
   }, [viewer, setPanoramas]);
   return (
     <div>
+      <div
+        style={
+          isLoading === true
+            ? {
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "absolute",
+                top: "0",
+                left: "0",
+                width: "100%",
+                height: "100%",
+                backgroundColor: "black",
+                opacity: "0.5",
+                color: "white",
+              }
+            : { display: "none" }
+        }
+      >
+        데이터 로딩중..
+      </div>
       {panoramas.map((ele, index) => {
         return (
           <PanoListItem

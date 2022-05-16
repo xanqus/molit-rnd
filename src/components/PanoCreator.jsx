@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as PANOLENS from "../../node_modules/panolens/build/panolens";
 import axios from "axios";
 
@@ -11,6 +11,7 @@ const PanoCreator = ({
   setInfospots,
   location,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const onChange = (e) => {
     var reader = new FileReader();
     const img = e.target.files[0];
@@ -21,7 +22,7 @@ const PanoCreator = ({
         const imageFile = new FormData();
         imageFile.append("images", e.target.files[0]);
         console.log("reader.result", reader.result);
-
+        setIsLoading(true);
         await axios
           .post(process.env.REACT_APP_API_HOST + "/panoramas", imageFile, {
             headers: {
@@ -47,6 +48,7 @@ const PanoCreator = ({
             );
             setInfospots(infospots.concat([]));
             console.log("panoramas", panoramas);
+            setIsLoading(false);
           });
       },
       false
@@ -56,6 +58,27 @@ const PanoCreator = ({
       reader.readAsDataURL(img);
     }
   };
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          position: "absolute",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100%",
+          backgroundColor: "black",
+          opacity: "0.5",
+          color: "white",
+        }}
+      >
+        파노라마 생성중..
+      </div>
+    );
+  }
   return (
     <div style={{ width: "100%", height: "50px" }}>
       <label

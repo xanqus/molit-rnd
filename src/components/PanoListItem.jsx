@@ -13,13 +13,23 @@ const PanoListItem = ({
   try {
     return (
       <div
-        style={{
-          width: "100%",
-          height: "auto",
-          minHeight: "50px",
-          backgroundColor: "#2ed573",
-          color: "#f1f2f6",
-        }}
+        style={
+          currentPanoIndex === index
+            ? {
+                width: "100%",
+                height: "auto",
+                minHeight: "50px",
+                backgroundColor: "#2e39d5",
+                color: "#f1f2f6",
+              }
+            : {
+                width: "100%",
+                height: "auto",
+                minHeight: "50px",
+                backgroundColor: "#2e7cd5",
+                color: "#f1f2f6",
+              }
+        }
       >
         <div
           onClick={() => {
